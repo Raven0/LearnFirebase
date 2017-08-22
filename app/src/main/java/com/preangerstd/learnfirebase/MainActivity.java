@@ -1,5 +1,6 @@
 package com.preangerstd.learnfirebase;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
 
     private DatabaseReference dbRef;
-    private Button btnFirebase;
+    private Button btnFirebase, btnView;
     private EditText tbName, tbEmail;
 
     private int increments;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         dbRef = FirebaseDatabase.getInstance().getReference();
         btnFirebase = (Button) findViewById(R.id.btnSubmit);
+        btnView = (Button) findViewById(R.id.btnView);
 
         tbName = (EditText) findViewById(R.id.tbName);
         tbEmail = (EditText) findViewById(R.id.tbEmail);
@@ -42,9 +44,15 @@ public class MainActivity extends AppCompatActivity {
                 HashMap<String, String> dataMap = new HashMap<String, String>();
                 dataMap.put("Name", name);
                 dataMap.put("Email", email);
-
-                dbRef.child("UserId" + increments).setValue(dataMap);
                 increments++;
+            }
+        });
+
+        btnView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent explicit = new Intent(MainActivity.this,ViewActivity.class);
+                startActivity(explicit);
             }
         });
     }
