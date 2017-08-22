@@ -19,6 +19,7 @@ public class ViewActivity extends AppCompatActivity {
     private ListView dgv;
 
     private ArrayList<String> dataName = new ArrayList<>();
+    private ArrayList<String> dataKey = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +37,24 @@ public class ViewActivity extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 String value = dataSnapshot.getValue(String.class);
                 dataName.add(value);
+
+                String key = dataSnapshot.getKey();
+                dataKey.add(key);
+
                 arrayAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                String value = dataSnapshot.getValue(String.class);
+                String key = dataSnapshot.getKey();
+
+                int index = dataKey.indexOf(key);
+
+                dataName.set(index, value);
+
+                arrayAdapter.notifyDataSetChanged();
 
             }
 
